@@ -1,0 +1,31 @@
+============================================================
+Device Identifiers Viewer - метаданные
+============================================================
+
+Название приложения:    Device Identifiers Viewer
+Версия:                 1.0.0
+Издатель:               DeviceIdentifiersViewer
+URL:                    https://github.com/example/DeviceIdentifiersViewer
+Описание:               Просмотр идентификаторов устройства (только чтение).
+Не изменяет SMBIOS, MAC, HWID и т.п.
+
+Где менять:
+
+- installer.iss       (строки 20-24, #define ...)
+- DeviceIdentifiersViewer.csproj (если хотите AssemblyVersion)
+- Package.appxmanifest (только для MSIX, у нас сейчас Inno Setup)
+
+После изменения — пересобрать установщик:
+build-installer.bat
+
+============================================================
+Требования для целевой машины
+============================================================
+
+- Windows 10 версии 1809 (build 17763) или новее, либо Windows 11
+- Windows App Runtime 1.8
+https://aka.ms/windowsappsdk/1.8/latest/windowsappruntimeinstall-x64.exe
+- ~150 МБ свободного места
+- Права администратора (для установки в Program Files)
+
+============================================================

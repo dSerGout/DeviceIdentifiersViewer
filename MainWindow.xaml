@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="DeviceIdentifiersViewer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:DeviceIdentifiersViewer.Models"
+    Title="Device Identifiers Viewer">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16" RowSpacing="12">
+
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="Device Identifiers Viewer" Style="{StaticResource TitleTextBlockStyle}"/>
+            <TextBlock Text="Только просмотр. Приложение не меняет идентификаторы устройства."
+                       Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <TextBox x:Name="SearchBox"
+                     Grid.Column="0"
+                     PlaceholderText="Поиск по категории, имени или значению…"
+                     TextChanged="SearchBox_TextChanged"/>
+            <Button Grid.Column="1" Content="Обновить" Click="Refresh_Click" Style="{StaticResource AccentButtonStyle}"/>
+            <Button Grid.Column="2" Content="Копировать" Click="Copy_Click"/>
+            <Button Grid.Column="3" Content="Экспорт в TXT…" Click="ExportTxt_Click"/>
+            <Button Grid.Column="4" Content="Экспорт в JSON…" Click="ExportJson_Click"/>
+        </Grid>
+
+        <ListView x:Name="ItemsList"
+                  Grid.Row="2"
+                  SelectionMode="Extended"
+                  BorderThickness="1"
+                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                  CornerRadius="8"
+                  Padding="4">
+            <ListView.Header>
+                <Grid ColumnDefinitions="120,260,*,220" Padding="12,8">
+                    <TextBlock Grid.Column="0" Text="Категория" Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="1" Text="Идентификатор" Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="2" Text="Значение" Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column="3" Text="Источник" Style="{StaticResource CaptionTextBlockStyle}" FontWeight="SemiBold"/>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:IdentifierItem">
+                    <Grid ColumnDefinitions="120,260,*,220" Padding="12,6">
+                        <TextBlock Grid.Column="0" Text="{x:Bind Category}" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Name}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind Value}" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind Source}" Opacity="0.6" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <TextBlock x:Name="StatusText" Grid.Column="0" Text="Готово."
+                       VerticalAlignment="Center" TextWrapping="Wrap"/>
+            <ProgressRing x:Name="BusyRing" Grid.Column="1" IsActive="False" Width="24" Height="24"/>
+        </Grid>
+    </Grid>
+</Window>
